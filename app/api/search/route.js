@@ -1,263 +1,42 @@
 import { connectToDB } from "@utils/database";
 import  User  from "@models/user"
+import { NextResponse } from 'next/server'
+import { fetchSocialDetails } from "@utils";
 export const POST = async (request) => {
     const { query, type, user } = await request.json();    
-    const emailApiUrl = "https://api.seon.io/SeonRestService/email-api/v2.2/"    
-    const mobileApiUrl = "https://api.seon.io/SeonRestService/phone-api/v1.4/"
-    try {
-       
-        await connectToDB();
-        const userExists = await User.findById(user);  
-        const userData = {
-            "success": true,
-            "error": {},
-            "data": {
-              "email": "asha.baliyan@gmail.com",
-              "score": 0.0,
-              "deliverable": true,
-              "domain_details": {
-                "domain": "gmail.com",
-                "tld": ".com",
-                "registered": true,
-                "created": "1995-08-13 04:00:00",
-                "updated": "2022-07-11 09:25:59",
-                "expires": "2023-08-12 04:00:00",
-                "registrar_name": "MarkMonitor Inc.",
-                "registered_to": "Google LLC",
-                "disposable": false,
-                "free": true,
-                "custom": false,
-                "dmarc_enforced": true,
-                "spf_strict": true,
-                "valid_mx": true,
-                "accept_all": false,
-                "suspicious_tld": false,
-                "website_exists": true
-              },
-              "account_details": {
-                "apple": {
-                  "registered": false
-                },
-                "ebay": {
-                  "registered": null
-                },
-                "facebook": {
-                  "registered": true,
-                  "url": null,
-                  "name": null,
-                  "photo": null
-                },
-                "flickr": {
-                  "registered": false,
-                  "username": null
-                },
-                "foursquare": {
-                  "registered": false,
-                  "bio": null,
-                  "photo": null,
-                  "profile_url": null
-                },
-                "github": {
-                  "registered": false
-                },
-                "google": {
-                  "registered": true,
-                  "photo": "https://lh3.googleusercontent.com/a-/AD_cMMRFb4T_OqnZSO85Cswul-xhcw9L2w9xMAxDh10D3CyKOA"
-                },
-                "gravatar": {
-                  "registered": false,
-                  "location": null,
-                  "name": null,
-                  "profile_url": null,
-                  "username": null
-                },
-                "instagram": {
-                  "registered": true
-                },
-                "lastfm": {
-                  "registered": false
-                },
-                "linkedin": {
-                  "registered": true,
-                  "url": "https://linkedin.com/in/asha-baliyan-6aa9611a3",
-                  "name": "Asha Baliyan",
-                  "company": "Amway India Enterprises Private Limited",
-                  "title": "We are working on Assets Based Income(Amway Direct Seller)",
-                  "location": "Delhi, India",
-                  "website": null,
-                  "twitter": null,
-                  "photo": "https://media.licdn.com/dms/image/C5103AQG1krejC_VnFw/profile-displayphoto-shrink_400_400/0/1582896606998?e=1689692400&v=beta&t=u3fnF2-lFiyAx1saHsNLifVqKUT9_hkyid0JOp-gK8E",
-                  "connection_count": 40
-                },
-                "microsoft": {
-                  "registered": true
-                },
-                "myspace": {
-                  "registered": false
-                },
-                "pinterest": {
-                  "registered": true
-                },
-                "skype": {
-                  "registered": false,
-                  "country": null,
-                  "city": null,
-                  "gender": null,
-                  "name": null,
-                  "id": null,
-                  "handle": null,
-                  "bio": null,
-                  "age": null,
-                  "language": null,
-                  "state": null,
-                  "photo": null
-                },
-                "spotify": {
-                  "registered": true
-                },
-                "tumblr": {
-                  "registered": false
-                },
-                "twitter": {
-                  "registered": true
-                },
-                "vimeo": {
-                  "registered": false
-                },
-                "weibo": {
-                  "registered": false
-                },
-                "yahoo": {
-                  "registered": false
-                },
-                "discord": {
-                  "registered": null
-                },
-                "ok": {
-                  "registered": false,
-                  "city": null,
-                  "age": null,
-                  "date_joined": null
-                },
-                "kakao": {
-                  "registered": null
-                },
-                "booking": {
-                  "registered": false
-                },
-                "airbnb": {
-                  "registered": false,
-                  "about": null,
-                  "created_at": null,
-                  "first_name": null,
-                  "identity_verified": null,
-                  "location": null,
-                  "image": null,
-                  "reviewee_count": null,
-                  "trips": null,
-                  "work": null
-                },
-                "amazon": {
-                  "registered": true
-                },
-                "qzone": {
-                  "registered": null
-                },
-                "adobe": {
-                  "registered": false
-                },
-                "mailru": {
-                  "registered": false
-                },
-                "wordpress": {
-                  "registered": false
-                },
-                "imgur": {
-                  "registered": false
-                },
-                "disneyplus": {
-                  "registered": false
-                },
-                "netflix": {
-                  "registered": false
-                },
-                "jdid": {
-                  "registered": null
-                },
-                "flipkart": {
-                  "registered": true
-                },
-                "bukalapak": {
-                  "registered": false
-                },
-                "archiveorg": {
-                  "registered": false
-                },
-                "lazada": {
-                  "registered": false
-                },
-                "zoho": {
-                  "registered": false
-                },
-                "samsung": {
-                  "registered": true
-                },
-                "evernote": {
-                  "registered": false
-                },
-                "envato": {
-                  "registered": false
-                },
-                "patreon": {
-                  "registered": false
-                },
-                "tokopedia": {
-                  "registered": false
-                },
-                "rambler": {
-                  "registered": false
-                },
-                "quora": {
-                  "registered": false
-                },
-                "atlassian": {
-                  "registered": null
+    let url
+    let userData
+    if(type == "email"){
+      console.log(type);
+      url = "https://api.seon.io/SeonRestService/email-api/v2.2/"+query
+    }
+    if(type == "mobile"){
+      url = "https://api.seon.io/SeonRestService/phone-api/v1.4/"+query
+    }
+    
+    try {       
+      await connectToDB();
+      const userExists = await User.findById(user); 
+        if(userExists){
+          const apiKey = userExists['api']
+          const headers = {
+                    'X-API-KEY': apiKey,
+                    'Content-Type':'application/json'
                 }
-              },
-              "breach_details": {
-                "haveibeenpwned_listed": true,
-                "number_of_breaches": 3,
-                "first_breach": "2018-06-01",
-                "breaches": [
-                  {
-                    "name": "bigbasket",
-                    "domain": "bigbasket.com",
-                    "date": "2020-10-14"
-                  },
-                  {
-                    "name": "Domino's India",
-                    "domain": "dominos.co.in",
-                    "date": "2021-03-24"
-                  },
-                  {
-                    "name": "SHEIN",
-                    "domain": "shein.com",
-                    "date": "2018-06-01"
-                  }
-                ]
-              },
-              "applied_rules": [
-                {
-                  "id": "E113",
-                  "name": "Domain is a free provider. At least 2 online profiles were found. It was involved in at least a data breach",
-                  "operation": "+",
-                  "score": 0.0
-                }
-              ]
-            }
-          }   
-             
-        return new Response(JSON.stringify(userData), { status: 200 })
+          try {     
+            const response = await fetchSocialDetails(
+              {
+                url:url,
+                headers:headers
+              }
+            )          
+            userData = response
+        }catch (error) {
+            console.log(error);
+            userData = []
+        } 
+      }     
+      return new Response(JSON.stringify(userData), { status: 200 })
     } catch (error) {
         return new Response(error, { status: 500 });
     }

@@ -13,17 +13,16 @@ const ResultCardList = ({data}) => {
       activeAccounts[i] = accoutDetails[i]      
     }
   }
-  activeAccounts = Object.entries(activeAccounts)
-  console.log(activeAccounts)
+  activeAccounts = Object.entries(activeAccounts)  
   return (
     <div className='mt-16 prompt_layout'>
-       {activeAccounts.map((post, index) => (
-        
-        <Card
-          key={index}
-          post={post}
-        />  
-        ))}
+      {activeAccounts.map((post, index) => (
+      
+      <Card
+        key={index}
+        post={post}
+      />  
+      ))}
     </div>
   )
 }
@@ -33,8 +32,7 @@ const Showresult = () => {
   const {data:session} = useSession();
   const [searchQuery, setsearchQuery] = useState("")
   const [isSubmitting, setisSubmitting] = useState(false)
-  const [searchedResults, setsearchedResults] = useState([])
-  const [queryType, setQueryType] = useState(null)
+  const [searchedResults, setsearchedResults] = useState([])  
 
   const validateEmail = (email) => {
     return email.match(
@@ -44,39 +42,37 @@ const Showresult = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    setisSubmitting(true)
-    const query = searchQuery
-        if(validateEmail(searchQuery)){
-          setQueryType("email")
-          const query = searchQuery.toString().toLowerCase()
-        }else{
-          setQueryType("mobile")
-          const query = searchQuery
-        }
-        try {
-            const response = await fetch("/api/search", {
-              method: "POST",
-              body: JSON.stringify({
-                query: query,
-                type: queryType,
-                user: session?.user.id
-              }),
-            });
-            const data = await response.json();             
-            if (response.ok) {              
-              setsearchedResults(data)  
-              router.push("/");
-            }
-          } catch (error) {
-            console.log(error);
-            setsearchedResults([])
-          } finally {            
-            setsearchQuery("");
-            setisSubmitting(false);
-          }
+    setisSubmitting(true) 
+    let queryType       
+    if(validateEmail(searchQuery)){
+      queryType = "email"          
+    }else{
+      queryType = "mobile"      
+    } 
+    try {      
+      const response = await fetch("/api/search", {
+        method: "POST",
+        body: JSON.stringify({
+          query: searchQuery,
+          type: queryType,
+          user: session?.user.id
+        }),
+      });
+      const data = await response.json();             
+      if (response.ok) { 
+        setsearchedResults(data)  
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setsearchedResults([])
+    } finally {            
+      setsearchQuery("");      
+      setisSubmitting(false);
+    }
         
   }
-  
+ 
   return (
     //TODO:check session.users
     (session &&  
@@ -92,9 +88,18 @@ const Showresult = () => {
         value={searchQuery} 
         //TODO:this need to be verify from old codes
         required
-        className='search_input peer'
-        />        
+        className='search_input'
+        />  
+        <button
+            type='submit'
+            disabled={isSubmitting}
+            className='px-5 py-1.5 text-sm rounded-r-lg h-10 w=10 bg-primary-orange text-white'
+          > 
+          {isSubmitting ? 'Searching...' : 'Search'}
+          </button>    
+           
     </form> 
+
     {searchedResults && Object.keys(searchedResults).length >= 1 && 
     <ResultCardList
       data={searchedResults}
