@@ -16,6 +16,9 @@ const UserSchema = new Schema({
   api:{
     type:String,
   },
+  querymade :{
+    type:Number,
+  },
   validity:{
     type:String,
     //TODO:Change this as date format later    

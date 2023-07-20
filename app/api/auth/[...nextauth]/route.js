@@ -30,8 +30,8 @@ const handler = NextAuth({
                 const userExists = await User.findOne({ email: profile.email });                
                 // if not, create a new document and save user in MongoDB
                 if (userExists) {                  
-                    if(!userExists.usrename){
-                      userExists.username = profile.name.replace(" ", "").toLowerCase()                   
+                    if(!userExists.usrename){                      
+                      userExists.username = profile.name.replace(/ /g, "").toLowerCase()                   
                       userExists.image =  profile.picture,  
                       await userExists.save(); 
                     }
