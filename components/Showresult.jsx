@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Card from "@components/Card";
 
 const ResultCardList = ({ data }) => {
-  console.log(data);
   const accoutDetails = data.data.account_details;
   let activeAccounts = {};
   for (let i in accoutDetails) {

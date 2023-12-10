@@ -7,7 +7,6 @@ export const POST = async (request) => {
   let url;
   let userData;
   if (type == "email") {
-    console.log(type);
     url =
       "https://api.us-east-1-main.seon.io/SeonRestService/email-api/v2/" +
       query;
