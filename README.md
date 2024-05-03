@@ -1,6 +1,8 @@
+![Screenshot from 2024-05-03 10-03-30](https://github.com/trueredfence/socialsearch/assets/147741505/13aa305f-8891-4cbc-a171-09b065281059)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Getting started
 
 First, run the development server:
 
